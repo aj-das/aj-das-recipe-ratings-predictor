@@ -63,3 +63,15 @@ Most recipes tend to be rated quite highly, with a strong right skew toward 5-st
 <iframe src="assets/calories_dist.html" width="800" height="500" frameborder="0"></iframe>
 
 Calories are heavily right-skewed, with most recipes under 1,000 calories but a few extreme outliers reaching up to 40,000+. We retained these for modeling but scaled the features appropriately.
+
+### Bivariate Analysis
+
+#### Minutes vs Average Rating
+<iframe src="assets/mins_vs_avg_rating.html" width="800" height="500" frameborder="0"></iframe>
+
+This scatter plot reveals a weak negative trend between cooking time (minutes) and average rating. Users slightly prefer quicker recipes, though high-rated dishes exist at all durations.
+
+#### Steps vs Average Rating
+<iframe src="assets/steps_vs_avg_rating.html" width="800" height="500" frameborder="0"></iframe>
+
+This box plot shows that recipes with fewer steps generally earn higher ratings. However, recipes with more steps tend to have more variation, potentially reflecting the challenge (and reward) of complex dishes.
