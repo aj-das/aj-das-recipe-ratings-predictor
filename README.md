@@ -1,4 +1,4 @@
-# 🧠 Recipe for Success: Predicting What Makes Food.com Recipes 5-Star Hits
+# Recipe for Success: Predicting What Makes Food.com Recipes 5-Star Hits
 
 **Author**: AJ Das  
 **Email**: arinjoy@umich.edu  
@@ -75,3 +75,15 @@ This scatter plot reveals a weak negative trend between cooking time (minutes) a
 <iframe src="assets/steps_vs_avg_rating.html" width="800" height="500" frameborder="0"></iframe>
 
 This box plot shows that recipes with fewer steps generally earn higher ratings. However, recipes with more steps tend to have more variation, potentially reflecting the challenge (and reward) of complex dishes.
+
+### Interesting Aggregates
+
+I created a new column called `is_easy`, which flags whether a recipe contains the tag "easy". Knowing if a recipe is easy may influence user perception and whether simplicity correlates with better ratings. 
+
+I then grouped the data by this flag and calculated the mean average rating for each group:
+
+| is_easy | avg_rating |
+|---------|------------|
+| False   | 4.67       |
+| True    | 4.68       |
+
