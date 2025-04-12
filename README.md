@@ -95,3 +95,13 @@ Several features had missing values, mainly the parsed nutrition columns. For mo
 <iframe src="assets/protein_after.html" width="800" height="400" frameborder="0"></iframe>
 
 The overall shape of the distribution was perserved by filling in missing protein values with the median. This helped stabilize model performance without dropping rows and not introducing outliers.
+
+## Framing a Prediction Problem
+
+The goal of this project is to **predict the average user rating (`avg_rating`) of a recipe** based on its metadata. Since `avg_rating` is a **continuous numerical value ranging from 1 to 5**, this is a **regression problem**. I want to estimate a real-valued prediction of how well a recipe is expected to be rated, prior to any user reviews being submitted. The choice of `avg_rating` as the response variable aligns directly with our research question: *What makes a recipe well-rated?*
+
+Understanding how different recipe characteristics influence user satisfaction can inform recommender systems and help both users and platforms highlight high-quality content.
+
+To evaluate the model, I chose **Mean Squared Error (MSE)** as my metric. MSE penalizes larger errors more severely, encouraging models that are accurate across the board. Classification metrics like accuracy or F1-score would not be appropriate in this context because we are predicting a continuous outcome, not a class label.
+
+At the **time of prediction**, all features used (e.g., `minutes`, `protein`, `n_steps`, `tags`, etc.) would be available to the system before the user submits any rating. Therefore, my setup realistically simulates how a platform like Food.com might recommend or rank recipes before they are reviewed.
