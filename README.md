@@ -87,3 +87,11 @@ I then grouped the data by this flag and calculated the mean average rating for 
 | False   | 4.67       |
 | True    | 4.68       |
 
+### Imputation
+Several features had missing values, mainly the parsed nutrition columns. For modeling, we used median imputation via SimpleImputer in a pipeline to handle missing data.
+
+#### Protein Distribution Before and After Imputation
+<iframe src="assets/protein_before.html" width="800" height="400" frameborder="0"></iframe> 
+<iframe src="assets/protein_after.html" width="800" height="400" frameborder="0"></iframe>
+
+The overall shape of the distribution was perserved by filling in missing protein values with the median. This helped stabilize model performance without dropping rows and not introducing outliers.
