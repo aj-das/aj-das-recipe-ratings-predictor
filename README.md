@@ -35,4 +35,32 @@ Here are the key columns used in my analysis and modeling:
 | `description`    | The user-submitted text description of the recipe                           |
 
 This combination of numeric and textual metadata provides insight for predicting a recipe’s potential success.
+
 ---
+
+## Data Cleaning and Exploratory Data Analysis
+
+### Data Cleaning
+
+The raw dataset was comprised of receipe metadata and user-submitted reviews. I performed a **left merge** on the recipe ID to consolidate all of the information. After the merge, I cleaned and transformed the data by removing zero ratings. If a rating had a value of 0, I replaced it with `NaN`, since they indicated an absence of a rating rather than a low rating. I computed `avg_rating`, which represented the average user rating for each recipe. This become the target variable for prediction. The nutrition column was originally a stringified list. I parsed it into individual numeric columsn for `calories`, `total_fat`, `sugar`, `sodium`, `protein`, `saturated_fat`, and `carbohydrates`. Finally, reciepes without an average rating were removed from the modeling set. Cleaning the data helped structure to analyze and model for the data analysis.
+
+```markdown
+| calories | total_fat | sugar | sodium | protein | saturated_fat | carbohydrates | avg_rating |
+|----------|-----------|-------|--------|---------|----------------|----------------|-------------|
+| 138.4    | 10.0      | 50.0  | 3.0    | 3.0     | 19.0           | 6.0            | 4.0         |
+| 595.1    | 46.0      | 211.0 | 22.0   | 13.0    | 51.0           | 26.0           | 5.0         |
+| 194.8    | 20.0      | 6.0   | 32.0   | 22.0    | 36.0           | 3.0            | 5.0         |
+| 194.8    | 20.0      | 6.0   | 32.0   | 22.0    | 36.0           | 3.0            | 5.0         |
+| 194.8    | 20.0      | 6.0   | 32.0   | 22.0    | 36.0           | 3.0            | 5.0         |
+
+### Univariate Analysis
+
+#### Distribution of Average Ratings
+<iframe src="assets/avg_rating_dist.html" width="800" height="500" frameborder="0"></iframe>
+
+Most recipes tend to be rated quite highly, with a strong right skew toward 5-star ratings. This bias in user feedback is important to consider when interpreting model performance.
+
+#### 🔹 Distribution of Calories
+<iframe src="assets/calories_dist.html" width="800" height="500" frameborder="0"></iframe>
+
+Calories are heavily right-skewed, with most recipes under 1,000 calories but a few extreme outliers reaching up to 40,000+. We retained these for modeling but scaled the features appropriately.
