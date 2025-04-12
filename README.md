@@ -1,1 +1,1 @@
-# aj-das-recipe-ratings-predictor
+# recipe-ratings-predictor
