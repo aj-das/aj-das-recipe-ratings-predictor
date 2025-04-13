@@ -98,13 +98,21 @@ The overall shape of the distribution was preserved by filling in missing protei
 
 ## Framing a Prediction Problem
 
-The goal of this project is to **predict the average user rating (`avg_rating`) of a recipe** based on its metadata. Since `avg_rating` is a **continuous numerical value ranging from 1 to 5**, this is a **regression problem**. I want to estimate a real-valued prediction of how well a recipe is expected to be rated before any user reviews are submitted. The choice of `avg_rating` as the response variable aligns directly with our research question: *What makes a recipe well-rated?*
+The goal of this project is to **predict the average user rating (`avg_rating`) of a recipe** based on its metadata. Since `avg_rating` is a continuous numerical value ranging from 1 to 5, this is a regression problem. I want to estimate a real-valued prediction of how well a recipe is expected to be rated before any user reviews are submitted. The choice of `avg_rating` as the response variable aligns directly with our research question: *What makes a recipe well-rated?*
 
 Understanding how different recipe characteristics influence user satisfaction can inform recommender systems and help both users and platforms highlight high-quality content.
 
-To evaluate the model, I chose **Mean Squared Error (MSE)** as my metric. MSE penalizes substantial errors more severely. Classification metrics like accuracy or F1-score would not be appropriate in this context because we are predicting a continuous outcome, not a class label.
+To evaluate the model, I chose Mean Squared Error (MSE) as my metric. MSE penalizes substantial errors more severely. Classification metrics like accuracy or F1-score would not be appropriate in this context because we are predicting a continuous outcome, not a class label.
 
-At the **time of prediction**, all features used (e.g., `minutes`, `protein`, `n_steps`, `tags`, etc.) would be available to the system before the user submits any rating. Therefore, my setup simulates how a platform like Food.com might recommend or rank recipes before they are reviewed.
+At the time of prediction, all features used (e.g., `minutes`, `protein`, `n_steps`, `tags`, etc.) would be available to the system before the user submits any rating. Therefore, my setup simulates how a platform like Food.com might recommend or rank recipes before they are reviewed.
 
 ## Baseline Model
+
+I trained a linear regression model to build an intial benchmark for predicting a recipe's average user rating. I used `minutes` (prep time) and `calories` (energy content) as valid inputs for my predictive model. They also represent dimensions that may affect user perception and satisfaction, like whether the recipe takes a long or short time to make or considering how the calorie intake for certain health choices.
+
+Before training, I dropped any rows where the `avg_rating` (our target) was missing. The preprocessing pipeline consisted of imputation, scaling, and modeling. Any missing values in features were filled with the median. I used `StandardScaler()` to improve numerical stability. Finally, the model was trained using `LinearRegression` from `sklearn`. The entire process was bundled into a `Pipeline`. The model was evaluated using **Mean Squared Error (MSE)** on a 20% test set: **Baseline MSE:** `0.2400`.
+
+Though this model is simple, it's a rudimentary standard to compare against advanced models with different feature engineering.
+
+## Final Model
 
