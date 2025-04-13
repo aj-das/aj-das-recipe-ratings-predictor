@@ -1,21 +1,21 @@
-# Recipe for Success: Predicting What Makes Food.com Recipes 5-Star Hits
+# Predicting What Makes Food.com Recipes 5-Star Hits
 
 **Author**: AJ Das  
 **Email**: arinjoy@umich.edu  
 
-This project explores which recipe features are most associated with high ratings using the Recipes and Ratings dataset. The analysis includes exploratory data visualization, feature engineering, and a predictive modeling pipeline.
+This project examines which recipe features are most associated with high ratings using the Recipes and Ratings dataset. The analysis includes exploratory data visualization, feature engineering, and a predictive modeling pipeline.
 
 ---
 
 ## Introduction
 
-This project uses the **Recipes and Ratings** dataset from Food.com, a large-scale collection of user-submitted recipes and their corresponding reviews. The dataset consists of over 230,000 reviews and 230,000+ recipes posted since 2008, making it an ideal source for exploring trends in food preferences and cooking behavior.
+This project uses the **Recipes and Ratings** dataset from Food.com, a large-scale collection of user-submitted recipes and their corresponding reviews. The dataset consists of over 230,000 reviews and 230,000+ recipes posted since 2008, establishing it as a reliable source for exploring trends in food preferences and cooking behavior.
 
 The main question I want to explore is: **What makes a recipe well-rated on Food.com?**  
 
-I aim to identify which recipe features like preparation time, nutritional content, or complexity, are most associated with high user ratings. Ultimately, I want to predict the average rating of a new recipe before it receives any user feedback.
+I aim to identify which recipe features, such as preparation time, nutritional content, or complexity, are most associated with high user ratings. Ultimately, I want to predict a new recipe's average rating before it receives any user feedback.
 
-Understanding which features contribute to higher-rated recipes can help cooks tailor their recipes for success, start a recommendation systems on cooking platforms, and reveal insights about user preferences. 
+Understanding which features contribute to higher-rated recipes can help cooks tailor their recipes for success, start recommendation systems on cooking platforms, and reveal insights about user preferences. 
 
 This analysis has practical value both for individual users and platforms aiming to improve recipe suggestions or highlight high-potential meals.
 
@@ -42,7 +42,7 @@ This combination of numeric and textual metadata provides insight for predicting
 
 ### Data Cleaning
 
-The raw dataset was comprised of receipe metadata and user-submitted reviews. I performed a **left merge** on the recipe ID to consolidate all of the information. After the merge, I cleaned and transformed the data by removing zero ratings. If a rating had a value of 0, I replaced it with `NaN`, since they indicated an absence of a rating rather than a low rating. I computed `avg_rating`, which represented the average user rating for each recipe. This become the target variable for prediction. The nutrition column was originally a stringified list. I parsed it into individual numeric columsn for `calories`, `total_fat`, `sugar`, `sodium`, `protein`, `saturated_fat`, and `carbohydrates`. Finally, reciepes without an average rating were removed from the modeling set. Cleaning the data helped structure to analyze and model for the data analysis.
+The raw dataset was comprised of recipe metadata and user-submitted reviews. I performed a **left merge** on the recipe ID to consolidate all the information. After the merge, I cleaned and transformed the data by removing zero ratings. If a rating had a value of 0, I replaced it with `NaN`, since they indicated an absence of a rating rather than a low rating. I computed `avg_rating`, which represented the average user rating for each recipe. This became the target variable for prediction. The nutrition column was originally a stringified list. I parsed it into an individual numeric column for `calories`, `total_fat`, `sugar`, `sodium`, `protein`, `saturated_fat`, and `carbohydrates`. Finally, recipes without an average rating were removed from the modeling set. Cleaning the data helped structure and model for the data analysis.
 
 | calories | total_fat | sugar | sodium | protein | saturated_fat | carbohydrates | avg_rating |
 |----------|-----------|-------|--------|---------|----------------|----------------|-------------|
@@ -57,7 +57,7 @@ The raw dataset was comprised of receipe metadata and user-submitted reviews. I 
 #### Distribution of Average Ratings
 <iframe src="assets/avg_rating_dist.html" width="800" height="500" frameborder="0"></iframe>
 
-Most recipes tend to be rated quite highly, with a strong right skew toward 5-star ratings. This bias in user feedback is important to consider when interpreting model performance.
+Most recipes are rated quite highly, with a strong right skew toward 5-star ratings. This bias in user feedback is fundamental to consider when interpreting model performance.
 
 #### Distribution of Calories
 <iframe src="assets/calories_dist.html" width="800" height="500" frameborder="0"></iframe>
@@ -94,14 +94,17 @@ Several features had missing values, mainly the parsed nutrition columns. For mo
 <iframe src="assets/protein_before.html" width="800" height="400" frameborder="0"></iframe> 
 <iframe src="assets/protein_after.html" width="800" height="400" frameborder="0"></iframe>
 
-The overall shape of the distribution was perserved by filling in missing protein values with the median. This helped stabilize model performance without dropping rows and not introducing outliers.
+The overall shape of the distribution was preserved by filling in missing protein values with the median. This helped stabilize model performance without dropping rows and not introducing outliers.
 
 ## Framing a Prediction Problem
 
-The goal of this project is to **predict the average user rating (`avg_rating`) of a recipe** based on its metadata. Since `avg_rating` is a **continuous numerical value ranging from 1 to 5**, this is a **regression problem**. I want to estimate a real-valued prediction of how well a recipe is expected to be rated, prior to any user reviews being submitted. The choice of `avg_rating` as the response variable aligns directly with our research question: *What makes a recipe well-rated?*
+The goal of this project is to **predict the average user rating (`avg_rating`) of a recipe** based on its metadata. Since `avg_rating` is a **continuous numerical value ranging from 1 to 5**, this is a **regression problem**. I want to estimate a real-valued prediction of how well a recipe is expected to be rated before any user reviews are submitted. The choice of `avg_rating` as the response variable aligns directly with our research question: *What makes a recipe well-rated?*
 
 Understanding how different recipe characteristics influence user satisfaction can inform recommender systems and help both users and platforms highlight high-quality content.
 
-To evaluate the model, I chose **Mean Squared Error (MSE)** as my metric. MSE penalizes larger errors more severely, encouraging models that are accurate across the board. Classification metrics like accuracy or F1-score would not be appropriate in this context because we are predicting a continuous outcome, not a class label.
+To evaluate the model, I chose **Mean Squared Error (MSE)** as my metric. MSE penalizes substantial errors more severely. Classification metrics like accuracy or F1-score would not be appropriate in this context because we are predicting a continuous outcome, not a class label.
 
-At the **time of prediction**, all features used (e.g., `minutes`, `protein`, `n_steps`, `tags`, etc.) would be available to the system before the user submits any rating. Therefore, my setup realistically simulates how a platform like Food.com might recommend or rank recipes before they are reviewed.
+At the **time of prediction**, all features used (e.g., `minutes`, `protein`, `n_steps`, `tags`, etc.) would be available to the system before the user submits any rating. Therefore, my setup simulates how a platform like Food.com might recommend or rank recipes before they are reviewed.
+
+## Baseline Model
+
