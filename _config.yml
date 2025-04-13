@@ -1,3 +1,6 @@
+title: Predicting What Makes Food.com Recipes 5-Star Hits
+description: A data science project exploring features of highly-rated Food.com recipes
 remote_theme: pages-themes/slate@v0.2.0
 plugins:
   - jekyll-remote-theme
+show_downloads: false

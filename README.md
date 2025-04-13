@@ -1,5 +1,3 @@
-# Predicting What Makes Food.com Recipes 5-Star Hits
-
 **Author**: AJ Das  
 **Email**: arinjoy@umich.edu  
 
