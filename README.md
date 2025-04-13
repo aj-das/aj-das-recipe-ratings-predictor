@@ -1,5 +1,4 @@
 # Predicting What Makes Food.com Recipes 5-Star Hits
-!(📈)
 
 **Author**: AJ Das  
 **Email**: arinjoy@umich.edu  
@@ -75,7 +74,7 @@ This scatter plot reveals a weak negative trend between cooking time (minutes) a
 #### Steps vs Average Rating
 <iframe src="assets/steps_vs_avg_rating.html" width="800" height="500" frameborder="0"></iframe>
 
-This box plot shows that recipes with fewer steps generally earn higher ratings. However, recipes with more steps tend to have more variation, potentially reflecting the challenge (and reward) of complex dishes.
+This box plot shows that recipes with fewer steps generally earn higher ratings. However, recipes with more steps tend to have more variation, which may reflect the challenge (and reward) of complex dishes.
 
 ### Interesting Aggregates
 
@@ -109,7 +108,7 @@ At the time of prediction, all features used (e.g., `minutes`, `protein`, `n_ste
 
 ## Baseline Model
 
-I trained a linear regression model to build an intial benchmark for predicting a recipe's average user rating. I used `minutes` (prep time) and `calories` (energy content) as valid inputs for my predictive model. They also represent dimensions that may affect user perception and satisfaction, like whether the recipe takes a long or short time to make or considering how the calorie intake for certain health choices.
+I trained a linear regression model to build an initial benchmark for predicting a recipe's average user rating. I used `minutes` (prep time) and `calories` (energy content) as valid inputs for my predictive model. They also represent dimensions that may affect user perception and satisfaction, like whether the recipe takes a long or short time to make or considering how the calorie intake for certain health choices.
 
 Before training, I dropped any rows where the `avg_rating` (our target) was missing. The preprocessing pipeline consisted of imputation, scaling, and modeling. Any missing values in features were filled with the median. I used `StandardScaler()` to improve numerical stability. Finally, the model was trained using `LinearRegression` from `sklearn`. The entire process was bundled into a `Pipeline`. The model was evaluated using **Mean Squared Error (MSE)** on a 20% test set: **Baseline MSE:** `0.2400`.
 
@@ -117,3 +116,23 @@ Though this model is simple, it's a rudimentary standard to compare against adva
 
 ## Final Model
 
+To improve my baseline model, I introduced three new features and used a stronger modeling algorithm. I added:
+- `protein_per_min`, which represents nutritional efficiency by dividing the protein content by preperation time 
+- `is_easy`, a boolean value that determines whether the recipe is easy or not
+- `n_steps` is the number of steps in the recipe
+
+I chose a `RandomForestRegressor` to capture nonlinear relationships and interactions between these features. I applied `GridSearchCV` to evaluate combinations of the following hyperparameters:
+- `n_estimators`: [50, 100]
+- `max_depth`: [5, 10, None]
+
+I utilized a median imputation strategy for numeric columns, applied standard scaling, and trained the model on 80% of the data using a pipeline structure. 
+
+### Final Results
+- Mean Squared Error (MSE): 0.1219
+- Best Hyperparameters: `{'model__n_estimators': 100, 'model__max_depth': None}`
+
+The MSE notably improved from the baseline model, emphasizing that feature engineering and hyperparameter tuning helped capture complex trends in the data.
+
+#### Feature Importances:
+The bar chart shows the importance of each feature according to the Random Forest model.
+<iframe src="assets/feature_importances.html" width="800" height="400" frameborder="0"></iframe> 
