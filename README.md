@@ -65,7 +65,7 @@ This box plot shows that recipes with fewer steps generally earn higher ratings.
 
 ### Interesting Aggregates
 
-I created a new column called `is_easy`, which flags whether a recipe contains the tag "easy". If a recipe is easy to make, then the user is more willing to cook it, thus simplicity correlates with better ratings.
+I created a new column called `is_easy`, which flags whether a recipe contains the tag "easy". If a recipe is easy to make, then the user is more willing to try it.
 
 I grouped the data by this flag and calculated the mean average rating for each group:
 
@@ -76,14 +76,13 @@ I grouped the data by this flag and calculated the mean average rating for each 
 
 ### Imputation
 
-The parsed nutrition columns had missing values. I used median imputation via `SimpleImputer` in a pipeline to handle missing data. 
+The parsed nutrition columns had missing values, so I used median imputation via `SimpleImputer` to handle missing data. 
 
 #### Protein Distribution Before and After Imputation
 <iframe src="assets/protein_before.html" width="800" height="400" frameborder="0"></iframe> 
 <iframe src="assets/protein_after.html" width="800" height="400" frameborder="0"></iframe>
 
-
-The overall shape of distribution was preserved by filling in missing protein values with the median. This stablized the model performance without dropping rows and not introducing outliers.
+The overall shape of the distribution was preserved by filling in missing protein values with the median. This stabilized the model performance without dropping rows and not introducing outliers.
 
 ## Framing a Prediction Problem
 
