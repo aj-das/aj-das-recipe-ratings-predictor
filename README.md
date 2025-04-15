@@ -6,7 +6,7 @@ I used the **Recipes and Ratings** dataset from Food.com to explore the question
 
 The dataset contains 230,000 reviews and 230,000+ recipes posted since 2008. It's a reliable source for exploring trends in food preferences and cooking behavior. I aim to identify which recipe features are most associated with high user ratings, such as preparation time, nutritional content, or complexity. Ultimately, I want to predict a new recipe's average rating before it receives any user feedback.
 
-Understanding which features contribute to higher-rated recipes can help cooks tailor their recipes for success. It also reveals insight about the user's preferences and establish recommendation systems on cooking platforms.
+Understanding which features contribute to higher-rated recipes can help cooks tailor their recipes for success. It also reveals insight into the user's preferences and establishes recommendation systems on cooking platforms.
 
 ### Dataset Overview  
 
@@ -29,7 +29,7 @@ This metadata provides perception for predicting a recipe’s potential success.
 
 ### Data Cleaning
 
-The raw dataset was comprised of recipe metadata and user-submitted reviews. I performed a **left merge** on the recipe ID to consolidate all the information. After the merge, I cleaned and transformed the data by removing zero ratings. If a rating had a value of 0, I replaced it with `NaN`, since they indicated an absence of a rating rather than a low rating. For each recipe, I computed `avg_rating`, the target variable for prediction which represented the average user rating. Intially, the nutrition column was a stringified list so I parsed it into an individual numeric column for `calories`, `total_fat`, `sugar`, `sodium`, `protein`, `saturated_fat`, and `carbohydrates`. Finally, recipes without an average rating were removed from the modeling set. Cleaning the data helped structure and model for the data analysis.
+The raw dataset was comprised of recipe metadata and user-submitted reviews. I performed a **left merge** on the recipe ID to consolidate all the information. After the merge, I cleaned and transformed the data by removing zero ratings. If a rating had a value of 0, I replaced it with `NaN`, since they indicated an absence of a rating rather than a low rating. For each recipe, I computed `avg_rating`, the target variable for prediction which represented the average user rating. Initially, the nutrition column was a stringified list so I parsed it into an individual numeric column for `calories`, `total_fat`, `sugar`, `sodium`, `protein`, `saturated_fat`, and `carbohydrates`. Finally, recipes without an average rating were removed from the modeling set. Cleaning the data helped structure and model for the data analysis.
 
 | calories | total_fat | sugar | sodium | protein | saturated_fat | carbohydrates | avg_rating |
 |----------|-----------|-------|--------|---------|----------------|----------------|-------------|
@@ -65,7 +65,7 @@ This box plot shows that recipes with fewer steps generally earn higher ratings.
 
 ### Interesting Aggregates
 
-I created a new column called `is_easy`, which flags whether a recipe contains the tag "easy". If a receipe is easy to make, then the user is more willing to cook it, thus simplicity correlates with better ratings.
+I created a new column called `is_easy`, which flags whether a recipe contains the tag "easy". If a recipe is easy to make, then the user is more willing to cook it, thus simplicity correlates with better ratings.
 
 I grouped the data by this flag and calculated the mean average rating for each group:
 
@@ -82,7 +82,8 @@ The parsed nutrition columns had missing values. I used median imputation via `S
 <iframe src="assets/protein_before.html" width="800" height="400" frameborder="0"></iframe> 
 <iframe src="assets/protein_after.html" width="800" height="400" frameborder="0"></iframe>
 
-By filling in missing protein values with the median, the overall shape of the distribution was maintained. It stablized the model performance without dropping rows and not introducing outliers.
+
+The overall shape of distribution was preserved by filling in missing protein values with the median. This stablized the model performance without dropping rows and not introducing outliers.
 
 ## Framing a Prediction Problem
 
@@ -90,13 +91,13 @@ The goal of this project was to **predict the average user rating (`avg_rating`)
 
 To evaluate the model, I chose Mean Squared Error (MSE) as my metric. MSE penalizes substantial errors more severely. Classification metrics like accuracy or F1-score would not be appropriate in this context because we are predicting a continuous outcome, not a class label.
 
-At the time of prediction, I used all features (e.g., `minutes`, `protein`, `n_steps`, `tags`, etc.) that were available to the system before the user submits any rating. Therefore, my setup simulates how a platform like Food.com might recommend or rank recipes before they are reviewed.
+At the time of prediction, I used all features (e.g., `minutes`, `protein`, `n_steps`, `tags`, etc.) that were available to the system before the user submitted any rating. Therefore, my setup simulates how a platform like Food.com might recommend or rank recipes before they are reviewed.
 
 ## Baseline Model
 
-I trained a linear regression model to have a starting point for predicting a recipe's average user rating. I used `minutes` (prep time) and `calories` (energy content) as inputs. These features may affect user perception and satisfaction, like whether the recipe takes a long or short time to make or considering the amount of calories for a recipe.
+I trained a linear regression model to have a starting point for predicting a recipe's average user rating. I used `minutes` (prep time) and `calories` (energy content) as inputs. These features may affect user perception and satisfaction, like whether the recipe takes a long or short time to make or considering the amount of calories in a recipe.
 
-Before training, I dropped any rows where the `avg_rating` was missing. The preprocessing pipeline consisted of imputation, scaling, and modeling. Any missing values in features were filled with the median. I used `StandardScaler()` to improve numerical stability. Finally, I trained the model with `LinearRegression` from `sklearn`. I bundled the process into a `Pipeline`. and evaluated the model using **Mean Squared Error (MSE)** on a 20% test set.
+Before training, I dropped any rows where the `avg_rating` was missing. The preprocessing pipeline consisted of imputation, scaling, and modeling. Any missing values in features were filled with the median. I used `StandardScaler()` to improve numerical stability. Finally, I trained the model with `LinearRegression` from `sklearn`. I bundled the process into a `Pipeline` and evaluated the model using **Mean Squared Error (MSE)** on a 20% test set.
 
 **Baseline MSE:** `0.2400`
 
