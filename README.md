@@ -1,4 +1,4 @@
-AJ Das - arinjoy@umich.edu  
+By AJ Das, arinjoy@umich.edu  
 
 ## Introduction
 
