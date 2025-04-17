@@ -80,7 +80,7 @@ The parsed nutrition columns had missing values, so I used median imputation via
 <iframe src="assets/protein_before.html" width="800" height="400" frameborder="0"></iframe> 
 <iframe src="assets/protein_after.html" width="800" height="400" frameborder="0"></iframe>
 
-The overall shape of the distribution was preserved by filling in missing protein values with the median. This stabilized the model performance without dropping rows and not introducing outliers.
+The overall shape of the distribution stayed the same by filling in missing protein values with the median. This didn't change the graph, and stabilized the model performance without dropping rows and not introducing outliers.
 
 ## Framing a Prediction Problem
 
