@@ -4,13 +4,11 @@ By AJ Das, arinjoy@umich.edu
 
 I used the **Recipes and Ratings** dataset from Food.com to explore the question, **What makes a recipe well-rated on Food.com?**
 
-The dataset contains 230,000 reviews and 230,000+ recipes posted since 2008. It's a reliable source for exploring trends in food preferences and cooking behavior. I aim to identify which recipe features are most associated with high user ratings, such as preparation time, nutritional content, or complexity. Ultimately, I want to predict a new recipe's average rating before it receives any user feedback.
+The dataset contains 230,000+ recipes and reviews posted since 2008. I aim to identify which recipe features are most associated with high user ratings, such as preparation time, nutritional content, or complexity. Ultimately, I want to predict a new recipe's average rating before it receives any user feedback.
 
 Understanding which features contribute to higher-rated recipes can help cooks tailor their recipes for success. It also reveals insight into the user's preferences and establishes recommendation systems on cooking platforms.
 
 ### Dataset Overview  
-
-After merging the original datasets, I worked with a cleaned dataset containing approximately **230,000 rows**.
 
 | Column           | Description                                                                 |
 |------------------|-----------------------------------------------------------------------------|
